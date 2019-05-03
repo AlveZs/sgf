@@ -1,0 +1,27 @@
+<div class="container">
+    <div>
+        <h2>Selecione os filtros</h2>
+    </div>
+    <div class = "row">
+    <span>Cargo</span>
+    <select 
+        id="cargosSelect"
+        ng-model="$ctrl.func.cargo"
+    >
+        <option value=""></option>
+        <option ng-repeat = "cargos in $ctrl.cargos" value="{{cargos.cargo_id}}">{{cargos.car_nome}}</option>
+    </select>
+    </div>
+    <div class = "row">
+        <span>Setor</span>
+        <select 
+            id="setorSelect"
+            ng-model="$ctrl.func.setor"
+        >
+            <option value=""></option>
+            <option ng-repeat = "setores in $ctrl.setores" value="{{setores.setor_id}}">{{setores.set_nome}}</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" ng-click="$ctrl.btnGerar()">Gerar</button>
+</div>
+<!-- $ctrl.deleteCargo(funcionarios.cargo_id)" -->

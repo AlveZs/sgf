@@ -1,0 +1,47 @@
+   <div class="container"> 
+    <form ng-submit = "submitFuncionarioForm()">
+        <div class="form-group">
+            <label for="nomeFunc">Nome</label>
+            <input type="text" ng-model="$ctrl.func.nomeFunc" class="form-control" id="InputNome" placeholder="Nome do funcionário" required>
+        </div>
+        <div class="form-group">
+            <label for="salarioFunc">Salario</label>
+            <input type="number" step = "0.01" min="0" ng-model="$ctrl.func.salarioFunc" class="form-control" id="InputSalario" placeholder="Salario" required>
+        </div>
+        <div class="form-group">
+            <label for="dataNascimento">Data de nascimento</label>
+            <div>
+              <input class="form-control" type="date" ng-model="$ctrl.func.dataNascimento" id="dataNascimento">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dataContratacao">Data de contratação</label>
+            <div>
+              <input class="form-control" type="date" ng-model="$ctrl.func.dataContratacao" id="dataContratacao">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cargos">Cargo</label>
+            <select 
+                class="form-control" 
+                id="cargosSelect"
+                ng-model="$ctrl.func.cargo"
+            >
+            <option></option>
+            <option ng-repeat = "cargos in $ctrl.cargos" value="{{cargos.cargo_id}}">{{cargos.car_nome}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="setor">Setor</label>
+            <select 
+                class="form-control" 
+                id="setorSelect"
+                ng-model="$ctrl.func.setor"
+            >
+            <option></option>
+            <option ng-repeat = "setores in $ctrl.setores" value="{{setores.setor_id}}">{{setores.set_nome}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+   </div>

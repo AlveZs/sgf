@@ -1,0 +1,22 @@
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat = "setores in $ctrl.setores"
+                ng-class="{ selected: $ctrl.isSelected(setores) }"
+            >
+            <th scope="row">{{setores.setor_id}}</th>
+            <td ng-click="$ctrl.onSelect(setores)">{{setores.set_nome}}</td>
+            <td><button class="btn btn-danger" ng-click="$ctrl.btnDelete(setores.setor_id)">Excluir</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" ng-click="$ctrl.addSetor()">Adicionar</button>
+</div>
+<!-- $ctrl.deleteSetor(setores.setor_id)" -->
