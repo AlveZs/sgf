@@ -1,4 +1,4 @@
-angular.module('setor', ['dialog', 'login'])
+angular.module('setor', ['login'])
   .service('setorService', SetorService)
 
   .component('setorHome', {
@@ -35,8 +35,7 @@ angular.module('setor', ['dialog', 'login'])
   });
 
 function SetorService($http) {
-  var API_URI = "http://localhost:8000/api/setor";
-  //var setoresPromise 
+  var API_URI = "api/setor";
 
   this.getSetores = function() {
     return setoresPromise = $http.get(API_URI)
@@ -64,7 +63,7 @@ function SetorService($http) {
 
   this.putSetor = function(setor, nomeSetor) {
     return $http({
-      url: 'http://localhost:8000/api/setor/'+ setor.setor_id,
+      url: 'api/setor/'+ setor.setor_id,
       method: "PUT",
       data: {'nome': nomeSetor}
     }).then(function(response) {
@@ -76,7 +75,7 @@ function SetorService($http) {
 
   this.deleteSetor = function(id) {
     return $http({
-      url: 'http://localhost:8000/api/setor/'+ id,
+      url: 'api/setor/'+ id,
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
@@ -148,7 +147,7 @@ function SetorAddComponent( $scope, setorService, $location ) {
   }
 }
 
-function SetorDetailComponent(setorService, dialogService) {
+function SetorDetailComponent(setorService) {
   var ctrl = this;
   this.$routerOnActivate = function(next) {
     var id = next.params.id;
@@ -162,13 +161,6 @@ function SetorDetailComponent(setorService, dialogService) {
     });
   };
 
-  this.$routerCanDeactivate = function() {
-    if (!this.setor || this.setor.set_nome === this.editName) {
-      return true;
-    }
-    return dialogService.confirm('Discard changes?');
-  };
-
   this.cancel = function() {
     ctrl.editName = ctrl.setor.set_nome;
     ctrl.gotoSetor();
@@ -179,8 +171,6 @@ function SetorDetailComponent(setorService, dialogService) {
     setorService.putSetor(ctrl.setor,ctrl.editName).then(function(){
       console.log("Funcao concluida");
     })
-    
-    //ctrl.setor.set_nome = ctrl.editName;
     ctrl.gotoSetor();
 
   };

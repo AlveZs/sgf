@@ -1,8 +1,8 @@
-angular.module('cargo', ['dialog'])
+angular.module('cargo', [])
   .service('cargoService', CargoService)
 
   .component('cargoHome', {
-    template: '<div class="container"><h2>Cargo Center</h2></div><ng-outlet></ng-outlet>',
+    template: '<div class="container"></div><ng-outlet></ng-outlet>',
     $routeConfig: [
       {path:'/',    name: 'CargoList',   component: 'cargoList', useAsDefault: true},
       {path:'/add', name: 'CargoAdd',   component: 'cargoAdd'},
@@ -10,7 +10,6 @@ angular.module('cargo', ['dialog'])
     ]
   })
 
-  
   .component('cargoList', {
     templateUrl: '/templates/cargoList.html',
     bindings: { $router: '<' },
@@ -34,10 +33,8 @@ angular.module('cargo', ['dialog'])
   });
 
 function CargoService($http) {
-  var API_URI = "http://localhost:8000/api/cargo";
+  var API_URI = "api/cargo";
   
-  //var cargosPromise 
-
   this.getCargos = function() {
     return cargosPromise = $http.get(API_URI)
     .then(function (response){
@@ -64,7 +61,7 @@ function CargoService($http) {
 
   this.putCargo = function(cargo, nomeCargo) {
     return $http({
-      url: 'http://localhost:8000/api/cargo/'+ cargo.cargo_id,
+      url: 'api/cargo/'+ cargo.cargo_id,
       method: "PUT",
       data: {'nome': nomeCargo}
     }).then(function(response) {
@@ -76,7 +73,7 @@ function CargoService($http) {
 
   this.deleteCargo = function(id) {
     return $http({
-      url: 'http://localhost:8000/api/cargo/'+ id,
+      url: 'api/cargo/'+ id,
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
@@ -147,7 +144,7 @@ function CargoAddComponent( $scope, cargoService) {
   }
 }
 
-function CargoDetailComponent(cargoService, dialogService) {
+function CargoDetailComponent(cargoService) {
   var ctrl = this;
   this.$routerOnActivate = function(next) {
     console.log('$routerOnActivate', this, arguments);
@@ -162,13 +159,6 @@ function CargoDetailComponent(cargoService, dialogService) {
     });
   };
 
-  this.$routerCanDeactivate = function() {
-    if (!this.cargo || this.cargo.car_nome === this.editName) {
-      return true;
-    }
-    return dialogService.confirm('Discard changes?');
-  };
-
   this.cancel = function() {
     ctrl.editName = ctrl.cargo.car_nome;
     ctrl.gotoCargo();
@@ -179,8 +169,6 @@ function CargoDetailComponent(cargoService, dialogService) {
     cargoService.putCargo(ctrl.cargo,ctrl.editName).then(function(){
       console.log("Funcao concluida");
     })
-    
-    //ctrl.cargo.car_nome = ctrl.editName;
     ctrl.gotoCargo();
 
   };

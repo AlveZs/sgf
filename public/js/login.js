@@ -16,9 +16,6 @@ angular.module('login', [])
           $location.path('/login');
         }
       })
-      /*if(_(routesThatRequireAuth).contains($location.path()) && !authenticationService.isLoggedIn()) {
-        $location.path('/login');
-      }*/
     })
   });
 
@@ -66,7 +63,6 @@ angular.module('login', [])
     ctrl = this;
     ctrl.credentials = {email: "", password: ""};
     $scope.login = function() {
-      console.log($scope.credentials);
       authenticationService.login($scope.credentials).then(function(){
         $rootScope.barra = 'autenticado';
         $location.path('/cargo');

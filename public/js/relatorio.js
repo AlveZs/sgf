@@ -27,8 +27,7 @@ angular.module('relatorio', [])
 
 
 function RelatorioService($http, $window) {
-  var API_URI = "http://localhost:8000/api/";
-  //var setoresPromise 
+  var API_URI = "api/";
 
   this.getSetores = function() {
     return setoresPromise = $http.get(API_URI + 'setor')
@@ -49,14 +48,7 @@ function RelatorioService($http, $window) {
   };
 
   this.getInfosRel = function(url_api) {
-    //$window.location.href = url_api;  
     $window.open(url_api);
-    /*return funcionariosPromise = $http.get(url_api)
-    .then(function (response){
-        return response.data;
-    }).catch(function(response) {
-      console.error('Error occurred:', response.status, response.data);
-    });*/
   };
 
 }   
@@ -111,7 +103,7 @@ function RelatorioIndexComponent(relatorioService) {
   };
 }
 
-function RelatorioComponent(relatorioService, dialogService) {
+function RelatorioComponent(relatorioService) {
     var ctrl = this;
     var setor;
     var cargo;
@@ -122,28 +114,12 @@ function RelatorioComponent(relatorioService, dialogService) {
         url_api = "http://localhost:8000/api/funcionario/";
         if (setor != "" && cargo != ""){
             relatorioService.getInfosRel(url_api + 'rel/' + setor + '/' + cargo)
-            /*relatorioService.getInfosRel(url_api + 'rel/' + setor + '/' + cargo)
-                .then(function (funcionarios) {
-                    ctrl.setValues(funcionarios);
-            });*/
         } else if (setor != "" && cargo == ""){
             relatorioService.getInfosRel(url_api + 'set/' + setor)
-            /*relatorioService.getInfosRel(url_api + 'set/' + setor)
-                .then(function (funcionarios) {
-                    ctrl.setValues(funcionarios);
-            });*/
         } else if (setor == "" && cargo != ""){
             relatorioService.getInfosRel(url_api +'car/' + cargo)
-            /*relatorioService.getInfosRel(url_api +'car/' + cargo)
-                .then(function (funcionarios) {
-                    ctrl.setValues(funcionarios);
-            });*/
         } else {
             relatorioService.getInfosRel(url_api + 'rel');
-            /*relatorioService.getInfosRel(url_api +'rel')
-                .then(function (funcionarios) {
-                    ctrl.setValues(funcionarios);
-            });*/
         }
     };
 

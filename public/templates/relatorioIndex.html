@@ -2,9 +2,10 @@
     <div>
         <h2>Selecione os filtros</h2>
     </div>
-    <div class = "row">
-    <span>Cargo</span>
+    <div class = "form-group">
+    <label for="cargosSelect">cargo</label>
     <select 
+        class="form-control"
         id="cargosSelect"
         ng-model="$ctrl.func.cargo"
     >
@@ -12,9 +13,10 @@
         <option ng-repeat = "cargos in $ctrl.cargos" value="{{cargos.cargo_id}}">{{cargos.car_nome}}</option>
     </select>
     </div>
-    <div class = "row">
-        <span>Setor</span>
-        <select 
+    <div class = "form-group">
+        <label for="setorSelect">Setor</label>        
+        <select
+            class="form-control" 
             id="setorSelect"
             ng-model="$ctrl.func.setor"
         >

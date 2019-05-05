@@ -1,4 +1,4 @@
-angular.module('funcionario', ['dialog'])
+angular.module('funcionario', [])
   .service('funcionarioService', FuncionarioService)
 
   .component('funcionarioHome', {
@@ -35,12 +35,7 @@ angular.module('funcionario', ['dialog'])
   });
 
 function FuncionarioService($http) {
-  var API_URI = "http://localhost:8000/api/";
-  //var funcionariosPromise 
-
-  //var cargosPromise 
-
-  //var setoresPromise 
+  var API_URI = "api/";
 
   this.getFuncionarios = function() {
     return funcionariosPromise = $http.get(API_URI + 'funcionario')
@@ -93,7 +88,7 @@ function FuncionarioService($http) {
 
   this.putFuncionario = function(funcionario) {
     return $http({
-      url: 'http://localhost:8000/api/funcionario/'+ funcionario.funcionario_id,
+      url: 'api/funcionario/'+ funcionario.funcionario_id,
       method: "PUT",
       data: {
         "nome" : funcionario.fun_nome,
@@ -110,7 +105,7 @@ function FuncionarioService($http) {
 
   this.deleteFuncionario = function(id) {
     return $http({
-      url: 'http://localhost:8000/api/funcionario/'+ id,
+      url: 'api/funcionario/'+ id,
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
@@ -201,7 +196,7 @@ function FuncionarioAddComponent( $scope, funcionarioService, $filter) {
   };
 }
 
-function FuncionarioDetailComponent(funcionarioService, $filter, dialogService) {
+function FuncionarioDetailComponent(funcionarioService, $filter) {
   var ctrl = this;
   this.$routerOnActivate = function(next) {
     console.log('$routerOnActivate', this, arguments);
@@ -226,17 +221,8 @@ function FuncionarioDetailComponent(funcionarioService, $filter, dialogService) 
       }
     });
   };
-
-  this.$routerCanDeactivate = function() {
-    if (!this.funcionario || this.funcionario.car_nome === this.editName) {
-      return true;
-    }
-    return dialogService.confirm('Discard changes?');
-  };
   
-
   this.cancel = function() {
-    //ctrl.editName = ctrl.funcionario.car_nome;
     ctrl.gotoFuncionario();
   };
 
