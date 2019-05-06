@@ -2,7 +2,7 @@ angular.module('setor', ['login'])
   .service('setorService', SetorService)
 
   .component('setorHome', {
-    template: '<div class="container"><h2>Setor Center</h2></div><ng-outlet></ng-outlet>',
+    template: '<div class="container"></div><ng-outlet></ng-outlet>',
     $routeConfig: [
       {path:'/',    name: 'SetorList',   component: 'setorList', useAsDefault: true},
       {path:'/add', name: 'SetorAdd',   component: 'setorAdd'},
@@ -55,9 +55,8 @@ function SetorService($http) {
     })
     .then(function(response) {
             return response;
-    }, 
-    function(response) { 
-            console.log(response);
+    }).catch(function (response){
+      window.alert('Não foi possível incluir' + response.data);
     });
   };
 
@@ -68,8 +67,8 @@ function SetorService($http) {
       data: {'nome': nomeSetor}
     }).then(function(response) {
         console.log(response);
-      }, function(response){
-        console.log(response);
+      }).catch(function (response){
+        window.alert('Não foi possível editar' + response.data);
       });
   }
 
@@ -79,8 +78,8 @@ function SetorService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
-      }, function(response){
-        console.log(response);
+      }).catch(function (response){
+        window.alert('Não foi possível excluir' + response.data);
       });
   };
 

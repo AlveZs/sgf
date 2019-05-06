@@ -53,9 +53,8 @@ function CargoService($http) {
     })
     .then(function(response) {
             return response;
-    }, 
-    function(response) { 
-            console.log(response);
+    }).catch(function (response){
+      window.alert('Não foi possível incluir' + response.data);
     });
   };
 
@@ -66,8 +65,8 @@ function CargoService($http) {
       data: {'nome': nomeCargo}
     }).then(function(response) {
         console.log(response);
-      }, function(response){
-        console.log(response);
+      }).catch(function (response){
+        window.alert('Não foi possível editar' + response.data);
       });
   }
 
@@ -77,8 +76,8 @@ function CargoService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
-      }, function(response){
-        console.log(response);
+      }).catch(function (response){
+        window.alert('Não foi possível excluir' + response.data);
       });
   };
 

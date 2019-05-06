@@ -2,7 +2,7 @@ angular.module('funcionario', [])
   .service('funcionarioService', FuncionarioService)
 
   .component('funcionarioHome', {
-    template: '<div class="container"><h2>Funcionario Center</h2></div><ng-outlet></ng-outlet>',
+    template: '<div class="container"></div><ng-outlet></ng-outlet>',
     $routeConfig: [
       {path:'/',    name: 'FuncionarioList',   component: 'funcionarioList', useAsDefault: true},
       {path:'/add', name: 'FuncionarioAdd',   component: 'funcionarioAdd'},
@@ -83,6 +83,7 @@ function FuncionarioService($http) {
     }, 
     ).catch(function(response) {
       console.error('Error occurred:', response.status, response.data);
+      window.alert('Não foi possível incluir');
     });
   };
 
@@ -100,6 +101,8 @@ function FuncionarioService($http) {
       }
     }).then(function(response) {
         console.log(response);
+      }).catch(function(response){
+        window.alert('Não foi possível editar' + response.data);
       });
   }
 
@@ -109,6 +112,8 @@ function FuncionarioService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
+      }).catch(function(response){
+        window.alert('Não foi possível excluir' + response.data);
       });
   };
 
@@ -208,12 +213,11 @@ function FuncionarioDetailComponent(funcionarioService, $filter) {
         ctrl.setores = setores;
     });
     funcionarioService.getFuncionario(id).then(function(funcionario) {
-      console.log(funcionario);
       if (funcionario) {
-        console.log(ctrl);
         ctrl.func = funcionario;
         var dataNascimento = funcionario.fun_data_nascimento.split("-");
         var dataContratacao = funcionario.fun_data_contratacao.split("-");
+        ctrl.func.fun_salario = parseFloat(ctrl.func.fun_salario);
         ctrl.func.fun_data_nascimento = new Date(dataNascimento[0],dataNascimento[1],dataNascimento[2]);
         ctrl.func.fun_data_contratacao = new Date(dataContratacao[0],dataContratacao[1],dataContratacao[2]);
       } else { 

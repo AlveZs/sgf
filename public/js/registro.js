@@ -20,7 +20,13 @@ angular.module('registro', [])
               "c_password": usuario.password_conf
             }
           }).then(function(response){
-               console.log(response);
+               window.alert('Usuário cadastrado com sucesso');
+            }).catch(function (response) {
+              if(response.data.error){
+                window.alert('As senhas digitadas devem ser iguais');
+              }else{
+                window.alert('Erro. Não foi possível registrar');
+              } 
             });
       }
 

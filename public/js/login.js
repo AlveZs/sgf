@@ -45,7 +45,12 @@ angular.module('login', [])
     return {
       login: function (credentials) {
         var login = $http.post("auth/login", credentials);
-        login.then(cacheSession);
+        login.then(cacheSession)
+        .catch(function (response) {
+          if(response.status === 401) {
+            window.alert('Dados incorretos. Por favor, tente novamente');
+          } 
+        });
         return login;
       },
       logout: function() {
