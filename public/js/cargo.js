@@ -14,9 +14,6 @@ angular.module('cargo', [])
     templateUrl: '/templates/cargoList.html',
     bindings: { $router: '<' },
     controller: CargoListComponent,
-    $canActivate: function($nextInstruction, $prevInstruction) {
-      console.log('$canActivate', arguments);
-    }
   })
   
   .component('cargoDetail', {
@@ -53,8 +50,8 @@ function CargoService($http) {
     })
     .then(function(response) {
             return response;
-    }).catch(function (response){
-      window.alert('Não foi possível incluir' + response.data);
+    }).catch(function (){
+      window.alert('Não foi possível incluir');
     });
   };
 
@@ -65,8 +62,8 @@ function CargoService($http) {
       data: {'nome': nomeCargo}
     }).then(function(response) {
         console.log(response);
-      }).catch(function (response){
-        window.alert('Não foi possível editar' + response.data);
+      }).catch(function (){
+        window.alert('Não foi possível editar');
       });
   }
 
@@ -76,8 +73,8 @@ function CargoService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
-      }).catch(function (response){
-        window.alert('Não foi possível excluir' + response.data);
+      }).catch(function (){
+        window.alert('Não foi possível excluir');
       });
   };
 
@@ -96,7 +93,6 @@ function CargoListComponent(cargoService) {
   var btndel = false;
 
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     cargoService.getCargos().then(function(cargos) {
       ctrl.cargos = cargos;
       selectedId = next.params.cargo_id;
@@ -105,7 +101,6 @@ function CargoListComponent(cargoService) {
 
   this.$routerOnReuse = function() {
     if(btndel === true) {
-      console.log('$routerOnReuse', this, arguments);
       cargoService.getCargos().then(function(cargos) {
         ctrl.cargos = cargos;
       });
@@ -146,7 +141,6 @@ function CargoAddComponent( $scope, cargoService) {
 function CargoDetailComponent(cargoService) {
   var ctrl = this;
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     var id = next.params.id;
     cargoService.getCargo(id).then(function(cargo) {
       if (cargo) {
@@ -173,7 +167,6 @@ function CargoDetailComponent(cargoService) {
   };
 
   this.gotoCargo = function() {
-    var cargoId = ctrl.cargo && ctrl.cargo.cargo_id;
-    this.$router.navigate(['CargoList', {id: cargoId}]);
+    this.$router.navigate(['CargoList']);
   };
 }

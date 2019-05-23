@@ -23,8 +23,6 @@ angular.module('app', ['ngComponentRouter', 'registro','login','cargo','setor', 
 
   function AppComponent($rootScope, $scope, authenticationService, $location){
     $rootScope.barra = "";
-    console.log($rootScope);
-
     $scope.logout = function() {
       authenticationService.logout().then(function() {
         $rootScope.barra = '';

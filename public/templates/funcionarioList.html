@@ -17,12 +17,12 @@
                 ng-class="{ selected: $ctrl.isSelected(funcionarios) }"
             >
             <th scope="row">{{funcionarios.funcionario_id}}</th>
-            <td ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.fun_nome}}</td>
-            <td>{{funcionarios.fun_salario}}</td>
-            <td>{{funcionarios.fun_data_nascimento | date: 'dd/MM/yyyy'}}</td>
-            <td>{{funcionarios.fun_data_contratacao | date: 'dd/MM/yyyy'}}</td>
-            <td>{{funcionarios.car_nome}}</td>
-            <td>{{funcionarios.set_nome}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.fun_nome}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.fun_salario}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.fun_data_nascimento | date: 'dd/MM/yyyy'}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.fun_data_contratacao | date: 'dd/MM/yyyy'}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.car_nome}}</td>
+            <td style="cursor: pointer" ng-click="$ctrl.onSelect(funcionarios)">{{funcionarios.set_nome}}</td>
             <td><button class="btn btn-danger" ng-click="$ctrl.btnDelete(funcionarios.funcionario_id)">Excluir</button></td>
             </tr>
         </tbody>

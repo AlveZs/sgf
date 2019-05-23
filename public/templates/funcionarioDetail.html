@@ -5,8 +5,8 @@
              <div class="form-group">
                  <label for="nomeExibido">Id: </label>{{$ctrl.func.funcionario_id}}</div>
              <div class="form-group">
-                 <label for="editNome">Name: </label>
-                 <input class="form-control" id="editNome" ng-model="$ctrl.func.fun_nome" placeholder="name"/>
+                 <label for="editNome">Nome: </label>
+                 <input class="form-control" id="editNome" ng-model="$ctrl.func.fun_nome" placeholder="Nome do funcionário" required/>
              </div>
              <div class="form-group">
                 <label for="salarioFunc">Salario</label>
@@ -16,13 +16,13 @@
             <div class="form-group">
                 <label for="dataNascimento">Data de nascimento</label>
                 <div>
-                  <input class="form-control" type="date" ng-model="$ctrl.func.fun_data_nascimento" id="dataNascimento">
+                  <input class="form-control" type="date" ng-model="$ctrl.func.fun_data_nascimento" id="dataNascimento" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="dataContratacao">Data de contratação</label>
                 <div>
-                  <input class="form-control" type="date" ng-model="$ctrl.func.fun_data_contratacao" id="dataContratacao">
+                  <input class="form-control" type="date" ng-model="$ctrl.func.fun_data_contratacao" id="dataContratacao" required>
                 </div>
             </div>
             <div class="form-group">
@@ -30,10 +30,12 @@
                 <select 
                     class="form-control" 
                     id="cargosSelect"
-                    ng-model="$ctrl.func.cargo_id"
+                    ng-model="$ctrl.func.cargo"
+                    ng-options="car.car_nome for car in $ctrl.cargos"
                     required
                 >
-                <option ng-repeat = "cargos in $ctrl.cargos" value="{{cargos.cargo_id}}">{{cargos.car_nome}}</option>
+                <option value="$ctrl.func.cargo_id" selected="selected">{{$ctrl.func.car_nome}}</option>
+                <!-- <option ng-repeat = "cargos in $ctrl.cargos" value="{{cargos.cargo_id}}">{{cargos.car_nome}}</option> -->
                 </select>
             </div>
             <div class="form-group">
@@ -41,14 +43,15 @@
                 <select 
                     class="form-control" 
                     id="setorSelect"
-                    ng-model="$ctrl.func.setor_id"
+                    ng-model="$ctrl.func.setor"
+                    ng-options="set.set_nome for set in $ctrl.setores"
                     required
                 >
-                <option ng-repeat = "setores in $ctrl.setores" value="{{setores.setor_id}}">{{setores.set_nome}}</option>    
+                <!-- <option ng-repeat = "setores in $ctrl.setores" value="{{setores.setor_id}}">{{setores.set_nome}}</option>     -->
                 </select>
             </div>
-             <button class="btn btn-success" ng-click="$ctrl.save()">Save</button>
-             <button class="btn btn-danger" ng-click="$ctrl.cancel()">Cancel</button>
+             <button class="btn btn-success" ng-click="$ctrl.save()">Salvar</button>
+             <button class="btn btn-danger" ng-click="$ctrl.cancel()">Cancelar</button>
          </div>
      </form>
  </div>

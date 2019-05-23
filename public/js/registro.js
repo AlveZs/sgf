@@ -40,4 +40,9 @@ angular.module('registro', [])
         $location.path('/login');
       })
     }
+
+    this.cancel = function() {
+      this.$router.navigate(['Login']);
+    }
+
   }

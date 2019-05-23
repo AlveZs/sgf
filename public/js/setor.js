@@ -15,9 +15,6 @@ angular.module('setor', ['login'])
     templateUrl: '/templates/setorList.html',
     bindings: { $router: '<' },
     controller: SetorListComponent,
-    $canActivate: function($nextInstruction, $prevInstruction) {
-      console.log('$canActivate', arguments);
-    }
   })
 
   
@@ -55,8 +52,8 @@ function SetorService($http) {
     })
     .then(function(response) {
             return response;
-    }).catch(function (response){
-      window.alert('Não foi possível incluir' + response.data);
+    }).catch(function (){
+      window.alert('Não foi possível incluir');
     });
   };
 
@@ -67,8 +64,8 @@ function SetorService($http) {
       data: {'nome': nomeSetor}
     }).then(function(response) {
         console.log(response);
-      }).catch(function (response){
-        window.alert('Não foi possível editar' + response.data);
+      }).catch(function (){
+        window.alert('Não foi possível editar');
       });
   }
 
@@ -78,8 +75,8 @@ function SetorService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
-      }).catch(function (response){
-        window.alert('Não foi possível excluir' + response.data);
+      }).catch(function (){
+        window.alert('Não foi possível excluir');
       });
   };
 
@@ -98,7 +95,6 @@ function SetorListComponent(setorService) {
   var btndel = false;
 
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     setorService.getSetores().then(function(setores) {
       ctrl.setores = setores;
       selectedId = next.params.setor_id;
@@ -106,7 +102,6 @@ function SetorListComponent(setorService) {
   };
 
   this.$routerOnReuse = function() {
-    console.log('$routerOnReuse', this, arguments);
     if(btndel === true) {
       setorService.getSetores().then(function(setores) {
         ctrl.setores = setores;
@@ -175,7 +170,6 @@ function SetorDetailComponent(setorService) {
   };
 
   this.gotoSetor = function() {
-    var setorId = ctrl.setor && ctrl.setor.setor_id;
-    this.$router.navigate(['SetorList', {id: setorId}]);
+    this.$router.navigate(['SetorList']);
   };
 }

@@ -15,9 +15,6 @@ angular.module('funcionario', [])
     templateUrl: '/templates/funcionarioList.html',
     bindings: { $router: '<' },
     controller: FuncionarioListComponent,
-    $canActivate: function($nextInstruction, $prevInstruction) {
-      console.log('$canActivate', arguments);
-    }
   })
 
   
@@ -96,13 +93,13 @@ function FuncionarioService($http) {
         "salario": funcionario.fun_salario,
         "data_nascimento": funcionario.dataNascFor,
         "data_contratacao": funcionario.dataContFor,
-        "cargo": funcionario.cargo_id,
-        "setor": funcionario.setor_id
+        "cargo": funcionario.cargo.cargo_id,
+        "setor": funcionario.setor.setor_id
       }
     }).then(function(response) {
         console.log(response);
-      }).catch(function(response){
-        window.alert('Não foi possível editar' + response.data);
+      }).catch(function(){
+        window.alert('Não foi possível editar');
       });
   }
 
@@ -112,8 +109,8 @@ function FuncionarioService($http) {
       method: "DELETE",
     }).then(function(response) {
         console.log(response);
-      }).catch(function(response){
-        window.alert('Não foi possível excluir' + response.data);
+      }).catch(function(){
+        window.alert('Não foi possível excluir');
       });
   };
 
@@ -133,7 +130,6 @@ function FuncionarioListComponent(funcionarioService) {
 
 
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     funcionarioService.getFuncionarios().then(function(funcionarios) {
       ctrl.funcionarios = funcionarios;
       selectedId = next.params.funcionario_id;
@@ -141,7 +137,6 @@ function FuncionarioListComponent(funcionarioService) {
   };
 
   this.$routerOnReuse = function() {
-    console.log('$routerOnReuse', this, arguments);
     if(btndel === true) {
       funcionarioService.getFuncionarios().then(function(funcionarios) {
         ctrl.funcionarios = funcionarios;
@@ -174,7 +169,6 @@ function FuncionarioAddComponent( $scope, funcionarioService, $filter) {
   var ctrl = this;
 
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     funcionarioService.getCargos().then(function(cargos) {
       ctrl.cargos = cargos;
     });
@@ -204,17 +198,27 @@ function FuncionarioAddComponent( $scope, funcionarioService, $filter) {
 function FuncionarioDetailComponent(funcionarioService, $filter) {
   var ctrl = this;
   this.$routerOnActivate = function(next) {
-    console.log('$routerOnActivate', this, arguments);
     var id = next.params.id;
-    funcionarioService.getCargos().then(function(cargos) {
-      ctrl.cargos = cargos;
-    });
-    funcionarioService.getSetores().then(function(setores) {
-        ctrl.setores = setores;
-    });
+    var car;
+    var set;
+
+    var preencheSelect = function(){
+      funcionarioService.getCargos().then(function(cargos) {
+        ctrl.cargos = cargos;
+        car = ctrl.cargos.map(x => x.cargo_id).indexOf(ctrl.func.cargo_id);
+        ctrl.func.cargo = ctrl.cargos[car];
+      });
+      funcionarioService.getSetores().then(function(setores) {
+          ctrl.setores = setores;
+          set = ctrl.setores.map(x => x.setor_id).indexOf(ctrl.func.setor_id);
+          ctrl.func.setor = ctrl.setores[set];
+      });
+    }
+
     funcionarioService.getFuncionario(id).then(function(funcionario) {
       if (funcionario) {
         ctrl.func = funcionario;
+        preencheSelect();
         var dataNascimento = funcionario.fun_data_nascimento.split("-");
         var dataContratacao = funcionario.fun_data_contratacao.split("-");
         ctrl.func.fun_salario = parseFloat(ctrl.func.fun_salario);
@@ -249,8 +253,6 @@ function FuncionarioDetailComponent(funcionarioService, $filter) {
   };
 
   this.gotoFuncionario = function() {
-    var funcionarioId = ctrl.funcionario && ctrl.funcionario.funcionario_id;
-
-    this.$router.navigate(['FuncionarioList', {id: funcionarioId}]);
+    this.$router.navigate(['FuncionarioList']);
   };
 }

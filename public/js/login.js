@@ -15,7 +15,7 @@ angular.module('login', [])
         if((value.match($location.path())) && !authenticationService.isLoggedIn()) {
           $location.path('/login');
         }
-      })
+      });
     })
   });
 
